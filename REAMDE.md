@@ -4,6 +4,7 @@
 - Gradle
 - Junit5
 - Selenide
+- JavaFaker
 
 ### Паттерны:
 - PageObject
