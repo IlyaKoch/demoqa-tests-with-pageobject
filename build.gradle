@@ -10,6 +10,7 @@ dependencies {
     testImplementation (
             "com.codeborne:selenide:5.25.0",
             "org.junit.jupiter:junit-jupiter:5.8.0",
+            "org.assertj:assertj-core:3.22.0",
             "com.github.javafaker:javafaker:1.0.2"
     )
     testRuntimeOnly (
@@ -19,4 +20,11 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+compileTestJava {
+    options.encoding = 'UTF-8'
 }
