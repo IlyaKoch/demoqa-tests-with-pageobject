@@ -1,26 +1,24 @@
 package tests;
 
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
-import org.assertj.core.api.SoftAssertions;
+import Utils.GetTableContent;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static java.lang.String.format;
+import static org.assertj.core.api.Assertions.assertThat;
 import static tests.TestData.*;
 
 public class RegistrationWithExecuteJavaScriptTests extends TestBase {
 
     RegistrationPage registrationPage = new RegistrationPage();
 
-    Map<String, String> expectedData = new HashMap<>() {{
+    public static Map<String, String> expectedData = new LinkedHashMap<>() {{
         put("Student Name", firstName + " " + lastName);
         put("Student Email", email);
         put("Gender", gender);
@@ -54,16 +52,8 @@ public class RegistrationWithExecuteJavaScriptTests extends TestBase {
         $("#submit").click();
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
 
-        ElementsCollection lines = $$(".table-responsive tbody tr").snapshot();
-        SoftAssertions sa = new SoftAssertions();
-        for (SelenideElement line : lines) {
-            String key = line.$("td").text(); //Student name
-            String expectedValue = expectedData.get(key);
-            String actualValue = line.$("td", 1).text();
-            sa.assertThat(actualValue)
-                    .as(format("Resilt in line %s was %s, but expected %s", key, actualValue, expectedValue))
-                    .isEqualTo(expectedValue);
+        LinkedHashMap<String, String> actualData = GetTableContent.getTableContentWithExecuteScript();
+        assertThat(actualData).isEqualTo(expectedData);
+        System.out.println("Expected data:\n" + StringUtils.join(expectedData));
         }
-        sa.assertAll();
-    }
 }

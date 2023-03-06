@@ -11,6 +11,8 @@ dependencies {
             "com.codeborne:selenide:5.25.0",
             "org.junit.jupiter:junit-jupiter:5.8.0",
             "org.assertj:assertj-core:3.22.0",
+            "com.fasterxml.jackson.core:jackson-databind:2.10.3",
+            "commons-io:commons-io:2.9.0",
             "com.github.javafaker:javafaker:1.0.2"
     )
     testRuntimeOnly (
